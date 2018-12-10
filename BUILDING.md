@@ -129,11 +129,11 @@ of luck with your distribution, try installing the following and point your PATH
 environment variable to it:
 
   * Linaro Toolchains for ARM
-    * 32-bit ARMv7 Cortex-A, hard-float, little-endian: [arm-linux-gnueabihf](https://releases.linaro.org/components/toolchain/binaries/latest/arm-linux-gnueabihf/)
-    * 64-bit ARMv8 Cortex-A, little-endian: [aarch64-linux-gnu](https://releases.linaro.org/components/toolchain/binaries/latest/aarch64-linux-gnu/)
+    * 32-bit ARMv7 Cortex-A, hard-float, little-endian: [arm-linux-gnueabihf](https://releases.linaro.org/components/toolchain/binaries/latest-7/arm-linux-gnueabihf/)
+    * 64-bit ARMv8 Cortex-A, little-endian: [aarch64-linux-gnu](https://releases.linaro.org/components/toolchain/binaries/latest-7/aarch64-linux-gnu/)
   * Codescape GNU Tools for MIPS
-    * MIPS32R5 and MIPS64R5: [mips-mti-linux-gnu](https://www.mips.com/?do-download=linux-x64-mti-gnu-linux-2016-05-06)
-    * MIPS32R6 and MIPS64R6: [mips-img-linux-gnu](https://www.mips.com/?do-download=linux-x64-img-gnu-linux-2016-05-03)
+    * MIPS32R5 and MIPS64R5: [mips-mti-linux-gnu](https://codescape.mips.com/components/toolchain/2016.05-06/Codescape.GNU.Tools.Package.2016.05-06.for.MIPS.MTI.Linux.CentOS-5.x86_64.tar.gz)
+    * MIPS32R6 and MIPS64R6: [mips-img-linux-gnu](https://codescape.mips.com/components/toolchain/2016.05-03/Codescape.GNU.Tools.Package.2016.05-03.for.MIPS.IMG.Linux.CentOS-5.x86_64.tar.gz)
 
 The cross-compilation of L4Re and Fiasco is similar to the normal build:
 
