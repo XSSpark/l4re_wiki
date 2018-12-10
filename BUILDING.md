@@ -11,7 +11,7 @@ On Debian 9.4, make sure you have the required packages installed together with
 their dependencies by running the following command with sufficient privileges:
 
     [somedir] $ apt-get install git make libarchive-zip-perl libpar-packer-perl libgit-repository-perl libxml-mini-perl gcc g++ libc6-dev-i386 g++-multilib libncurses5-dev qemu xorriso mtools flex bison
-    
+
 On top of a fresh Fedora 27 install, you will need the following packages and
 their dependencies:
 
@@ -48,7 +48,7 @@ a build directory:
     [somedir/l4] $ make B=../build-i386
     [somedir/l4] $ cd ../build-i386
     [somedir/build-i386] $ make config    # Merely exit and save the default configuration
-    
+
 Note that by choosing the default configuration, you are going to build L4Re for
 x86. Also note that the build directory can be arbitrary. *build-i386* is
 used as an example here.
@@ -56,11 +56,11 @@ used as an example here.
 The build directory is now ready and you can build the L4Re binaries:
 
     [somedir/build-i386] $ make           # Optionally use -j X to make the build parallel
-    
+
 The release L4Re binaries reside in the *bin* subdirectory of the build
 directory. For the x86 configuration, this is *bin/x86_gen/l4f*:
 
-    [somedir/build-i386] $ file bin/x86_gen/l4f/hello 
+    [somedir/build-i386] $ file bin/x86_gen/l4f/hello
     bin/x86_gen/l4f/hello: ELF 32-bit LSB executable, Intel 80386, version 1 (GNU/Linux), statically linked, with debug_info, not stripped
 
 ## Building Fiasco.OC
@@ -143,18 +143,19 @@ The cross-compilation of L4Re and Fiasco is similar to the normal build:
 When cross-compiling, you have to specify the prefix of the cross-tools you
 wish to use in the *CROSS_COMPILE* variable at some point before the config
 phase.
-    
-For example, when cross-compiling for the 32-bit ARM Versatile Express Cortex-A15,
-you need to specify the *CROSS_COMPILE* variable in a file called *Makeconf.local*.  Adjustments might be
-necessary for different cross-compilers and platforms:
+
+For example, when cross-compiling for the 32-bit ARM Versatile Express
+Cortex-A15, you need to specify the *CROSS_COMPILE* variable in a file called
+*Makeconf.local*.  Adjustments might be necessary for different cross-compilers
+and platforms:
 
     [somedir/build-arm] $ echo "CROSS_COMPILE:=arm-linux-gnueabihf-" > Makeconf.local
-    [somedir/build-arm] $ make config    # Select ARM architecture, ARMv7a CPU variant and ARM Versatile Express A15 platform 
+    [somedir/build-arm] $ make config    # Select ARM architecture, ARMv7a CPU variant and ARM Versatile Express A15 platform
     [somedir/build-arm] $ make
 
 Alternatively, you can define the *CROSS_COMPILE* variable on the command line:
 
-    [somedir/build-arm] $ make config CROSS_COMPILE=arm-linux-gnueabihf-    # Select ARM architecture, ARMv7a CPU variant and ARM Versatile Express A15 platform 
+    [somedir/build-arm] $ make config CROSS_COMPILE=arm-linux-gnueabihf-    # Select ARM architecture, ARMv7a CPU variant and ARM Versatile Express A15 platform
     [somedir/build-arm] $ make CROSS_COMPILE=arm-linux-gnueabihf-
 
 In both cases, don't forget to configure the system for the ARM architecture, the ARMv7A CPU variant and the ARM Versatile Express A15 platform.
@@ -164,12 +165,13 @@ Cross-compiling Fiasco is analogous to cross-compiling L4Re:
     [somedir/build-arm] $ cd ../fiasco
     [somedir/fiasco] $ make B=../build-fiasco-arm
     [somedir/fiasco] $ cd ../build-fiasco-arm
-    [somedir/build-fiasco-arm] $ echo "CROSS_COMPILE:=arm-linux-gnueabihf-" > Makeconf.local    
+    [somedir/build-fiasco-arm] $ echo "CROSS_COMPILE:=arm-linux-gnueabihf-" > Makeconf.local
     [somedir/build-fiasco-arm] $ make config    # Select ARM processor family as Architecture, ARM RealView Platform as Platform, Versatile Express as Realview Platform and ARM Cortex-A15 CPU as CPU
     [somedir/build-fiasco-arm] $ make
 
-When all is built, run the *hello* scenario in QEMU (assuming *qemu-system-arm* is installed on the system):
-    
+When all is built, run the *hello* scenario in QEMU (assuming *qemu-system-arm*
+is installed on the system):
+
     [somedir/build-fiasco-arm] $ cd ../build-arm
     [somedir/build-arm] $ make E=hello qemu MODULE_SEARCH_PATH="${PWD}/../build-fiasco-arm" QEMU_OPTIONS="-M vexpress-a15 -m 2047 -cpu cortex-a15 -serial stdio -display none" PLATFORM_TYPE=rv_vexpress_a15
 
@@ -194,8 +196,8 @@ glibc-devel.i686 on Fedora) are installed:
 
 ### Forgetting to set the architecture during *make config* before cross-compilation
 
-If you forget to set the respective architecture during the configuration step before
-cross-compilation, you may get failures that look like:
+If you forget to set the respective architecture during the configuration step
+before cross-compilation, you may get failures that look like:
 
     arm-linux-gnueabihf-gcc: error: unrecognized command line option ‘-m32’
     Makefile:372: recipe for target 'Makeconf.bid.local-internal-names' failed
