@@ -62,7 +62,6 @@ components:
     l4/pkg
     ├── bootstrap
     ├── drivers-frst
-    ├── io
     ├── l4re-core
     ├── l4virtio
     ├── libfdt
@@ -259,21 +258,10 @@ directory, create a file called *uvmm-basic.ned* with the following content:
 
 ````lua
 local L4 = require "L4";
-local bus_vm_nohw = L4.default_loader:new_channel();
-
-L4.default_loader:start({
-  log = { "io", "red" },
-  caps = {
-    sigma0  = L4.cast(L4.Proto.Factory, L4.Env.sigma0):create(L4.Proto.Sigma0);
-    icu     = L4.Env.icu;
-    vm_nohw = bus_vm_nohw:svr();
-  }
-}, "rom/io rom/io.cfg rom/vm_nohw.vbus");
 
 L4.default_loader:startv({
   log = L4.Env.log,
   caps = {
-    vbus = bus_vm_nohw;
     ram  = L4.Env.user_factory:create(
       L4.Proto.Dataspace,
       128 * 1024 * 1024,                   -- size in MB
@@ -288,12 +276,12 @@ L4.default_loader:startv({
   "--cmdline", "console=hvc0 earlyprintk=1 rdinit=/bin/sh");
 ````
 
-This ned script is as basic as it gets in that it only supports a single VM, but
-already contains everything necessary for doing just that without additional
-bells and whistles. More complex scenarios (e.g. involving multiple VMs) will
-require a more complex ned script and possibly also additional L4Re components.
-For these cases, L4Re provides a convenience wrapper. You shall see in a
-later example how to use it.
+This ned script is as basic as it gets. It only supports a single VM and does
+not pass any host I/O devices to the VM, but already contains everything
+necessary for doing just that without additional bells and whistles. More
+complex scenarios (e.g. involving multiple VMs) will require a more complex ned
+script and possibly also additional L4Re components.  For these cases, L4Re
+provides a convenience wrapper. You shall see in a later example how to use it.
 
 ### Specifying boot modules
 
@@ -309,55 +297,11 @@ roottask moe rom/uvmm-basic.ned
 module uvmm
 module l4re
 module ned
-module io
 module virt-arm_virt.dtb
 module ramdisk-armv8.cpio.gz
-module[shell] echo $SRC_BASE_ABS/pkg/uvmm/configs/bsp/plat-arm_virt/io.cfg
-module[shell] echo $SRC_BASE_ABS/pkg/uvmm/configs/vm_nohw.vbus
 module uvmm-basic.ned
 module Image.gz
 ````
-
-### Reviewing basic IO configuration
-
-In this tutorial we use basic IO configuration readily provided in the
-*pkg/uvmm* package. For our basic scenario, you don't need to recreate these
-files as they are already there, but it might be useful to review them to get a
-sence of how all these pieces fit together.
-
-In the ned script and also in the *modules.list* files above, you might have
-noticed that we are starting the IO server called *io* and that we pass it two
-Lua files: *io.cfg* and *vm_nohw.vbus*.
-
-Our *io.cfg* is very simple and only adds the interrupt controller device to the
-system bus:
-
-````lua
-Io.Dt.add_children(Io.system_bus(), function()
-    VGIC = Io.Hw.Device(function()
-      Property.hid = "arm-gicc"
-      Resource.reg0 = Io.Res.mmio(0x08040000, 0x0804ffff)
-      Property.flags = Io.Hw_device_DF_multi_vbus
-    end)
-end)
-````
-
-In *vm_nohw.vbus* we define a virtual bus associated with the *vm_nohw*
-capability (previously created in the ned script and passed to both *io* and
-*uvmm*) and pass the interrupt controller device to it. This virtual bus will be
-given to the Linux guest:
-
-````lua
-Io.add_vbusses
-{
-  vm_nohw = Io.Vi.System_bus(function()
-    VGIC = wrap(Io.system_bus():match("arm-gicc"))
-  end);
-}
-````
-
-As we are not passing any other devices, our Linux guest will be quite limited
-when it comes to interacting with hardware devices.
 
 ### Creating Makeconf.boot
 
@@ -418,18 +362,10 @@ package.path = "rom/?.lua";
 local L4 = require "L4";
 local vmm = require "vmm";
 
--- virtual IO busses
-local io_busses = {
-  vm_nohw = 1,
-}
-
-vmm.start_io(io_busses, "rom/io.cfg");
-
 vmm.start_vm({
   id = 1,
   mem = 128,
   mon = false,
-  vbus = io_busses.vm_nohw,
   rd = "rom/ramdisk-armv8.cpio.gz",
   fdt = "rom/virt-arm_virt.dtb",
   bootargs = "console=hvc0 earlyprintk=1 rdinit=/bin/sh",
@@ -448,11 +384,8 @@ roottask moe rom/uvmm.ned
 module uvmm
 module l4re
 module ned
-module io
 module virt-arm_virt.dtb
 module ramdisk-armv8.cpio.gz
-module[shell] echo $SRC_BASE_ABS/pkg/uvmm/configs/bsp/plat-arm_virt/io.cfg
-module[shell] echo $SRC_BASE_ABS/pkg/uvmm/configs/vm_nohw.vbus
 module[shell] echo $SRC_BASE_ABS/pkg/uvmm/configs/vmm.lua
 module uvmm.ned
 module Image.gz
@@ -471,4 +404,4 @@ it boots.
 In this tutorial you have learned to build, configure and run a basic Linux VM
 scenario in the L4Re virtual machine monitor *uvmm*. Parts not covered here
 include running multiple VMs, using a console multiplexer and a virtual network
-switch.
+switch. Likewise, we didn't show how to pass a host I/O device to the guest.
