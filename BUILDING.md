@@ -10,12 +10,12 @@ Depending on your host system, you might need to install some prerequisities.
 On Debian 9.4, make sure you have the required packages installed together with
 their dependencies by running the following command with sufficient privileges:
 
-    [somedir] $ apt-get install git make libarchive-zip-perl libpar-packer-perl libgit-repository-perl libxml-mini-perl gcc g++ libc6-dev-i386 g++-multilib libncurses5-dev qemu xorriso mtools flex bison
+    [somedir] $ apt-get install git make libarchive-zip-perl libpar-packer-perl libgit-repository-perl libxml-mini-perl gcc g++ libc6-dev-i386 g++-multilib libncurses5-dev qemu xorriso mtools flex bison pkg-config gawk liburi-perl
 
 On top of a fresh Fedora 27 install, you will need the following packages and
 their dependencies:
 
-    [somedir] $ dnf install perl-Archive-Extract-zip-Archive-Zip perl-PAR-Packer perl-Git-Repository-Plugin-AUTOLOAD perl-CPAN perl-Test perl-Text-Balanced gcc gcc-c++ glibc-devel.i686 ncurses-devel xorriso flex bison
+    [somedir] $ dnf install perl-Archive-Extract-zip-Archive-Zip perl-PAR-Packer perl-Git-Repository-Plugin-AUTOLOAD perl-CPAN perl-Test perl-Text-Balanced gcc gcc-c++ glibc-devel.i686 ncurses-devel xorriso flex bison pkgconf-pkg-config gawk
     [somedir] $ cpan install XML::Mini::Document
 
 ## Getting and installing ham
@@ -38,6 +38,9 @@ Use ham to get the L4Re project manifest and all its constituent repositories:
     [somedir/ham] $ cd ..
     [somedir] $ ham init -u https://github.com/kernkonzept/manifest.git
     [somedir] $ ham sync
+
+If ham sync is terminated early or fails to sync refer to the
+[troubleshooting](#troubleshooting) information.
 
 ## Building L4Re
 
@@ -82,7 +85,7 @@ And finally, build Fiasco itself:
 
 Like in the L4Re case above, the build directory is created and configured only
 once. The resulting Fiasco binary is called *fiasco*.
-    
+
 ## Running the Hello world! program
 
 Now that you have sucessfully built Fiasco and L4Re, it is time to verify that
@@ -182,6 +185,34 @@ Note that besides *MODULE_SEARCH_PATH*, also *QEMU_OPTIONS* and *PLATFORM_TYPE* 
 Building Fiasco and L4Re is a procedure complex enough to offer many
 opportunities for things to go wrong. Here are the most common issues and their
 causes:
+
+### Recovering from ham sync errors
+
+If ham sync is terminated early using Ctrl-C or encounters network errors such
+as the following an incomplete manifest may have been synced.
+
+    mk: fatal: The remote end hung up unexpectedly
+    mk: fatal: early EOF
+    mk: fatal: index-pack failed
+
+It is usually best to start again with an empty directory. Alternatively, it
+may be possible to selectively force sync some packages listed in
+.ham/manifest.xml:
+
+    [somedir] $ ham sync --force-local-update <manifest package name>
+
+If network issues are suspected try:
+
+    [somedir] $ ham sync --max-connections=1
+
+### Missing top-level make file
+
+If the ham sync operation was incomplete the *mk* package may be missing. In
+this case it's best to restart ham sync from an empty directory. Running *make*
+in the top-level directory results in this error indicating the top-level
+Makefile is missing:
+
+    make: *** No targets specified and no makefile found.  Stop.
 
 ### Missing multilib
 

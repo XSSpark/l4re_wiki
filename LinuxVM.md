@@ -28,7 +28,8 @@ You will need several ingredients:
 ### aarch64 toolchain
 
 As you will be building for aarch64, you are going to need the aarch64 build
-tools.  The easiest option is to get a ready-to-use toolchain from
+tools for both gcc and g++.  The easiest option is to get a ready-to-use
+toolchain from
 [Linaro](https://releases.linaro.org/components/toolchain/binaries/latest-7/aarch64-linux-gnu/)
 or from your distribution. Examples in this tutorial were tested with Linaro GCC
 6.3-2017.05 and 7.3-2018.05 and assume that a functionally equivalent toolchain
@@ -101,7 +102,7 @@ Make sure to select:
 
   * Target Architecture: ARM64 Architecture (AArch64)
   * CPU Variant: ARMv8-A Type CPU
-  * Platform Selection: QEMU ARM Virtual Machine
+  * Platform Selection: QEMU ARM Virtual Platform
 
 Once configured, build L4Re like this:
 
