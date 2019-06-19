@@ -272,7 +272,7 @@ L4.default_loader:startv({
       21                                   -- alignment
     ):m("rws");
   }
-}, "rom/uvmm", "--dtb", "rom/virt-arm_virt.dtb",
+}, "rom/uvmm", "--dtb", "rom/virt-arm_virt-64.dtb",
   "--ramdisk", "rom/ramdisk-armv8.cpio.gz", "--kernel", "rom/Image.gz",
   "--cmdline", "console=hvc0 earlyprintk=1 rdinit=/bin/sh");
 ````
@@ -298,7 +298,7 @@ roottask moe rom/uvmm-basic.ned
 module uvmm
 module l4re
 module ned
-module virt-arm_virt.dtb
+module virt-arm_virt-64.dtb
 module ramdisk-armv8.cpio.gz
 module uvmm-basic.ned
 module Image.gz
@@ -368,7 +368,7 @@ vmm.start_vm({
   mem = 128,
   mon = false,
   rd = "rom/ramdisk-armv8.cpio.gz",
-  fdt = "rom/virt-arm_virt.dtb",
+  fdt = "rom/virt-arm_virt-64.dtb",
   bootargs = "console=hvc0 earlyprintk=1 rdinit=/bin/sh",
   kernel = "rom/Image.gz",
   log = L4.Env.log
@@ -385,7 +385,7 @@ roottask moe rom/uvmm.ned
 module uvmm
 module l4re
 module ned
-module virt-arm_virt.dtb
+module virt-arm_virt-64.dtb
 module ramdisk-armv8.cpio.gz
 module[shell] echo $SRC_BASE_ABS/pkg/uvmm/configs/vmm.lua
 module uvmm.ned
