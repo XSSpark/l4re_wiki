@@ -27,6 +27,12 @@ switch (action)
   }
 ```
 
+Indentation with multi-line expressions:
+```
+l4_ipc_send(env->main_thread().cap(), l4_utcb(), l4_msgtag(0, 0, 0, 0),
+            L4_IPC_NEVER);
+```
+
 ### Namespaces
 
 Namespaces must be started using:
@@ -71,6 +77,11 @@ Code;
 }
 ```
 
+It is discouraged to use statements like ```using L4Re::chksys;``` or ```using
+L4Re::chkipc;``` even if you intent to save space: With the namespace in front
+of these global functions it is quite clear that this is the global function
+and not some local overloading.
+
 ## Line Breaks
 
 Our line length limit is 80 columns. Statements longer than 80 columns should
@@ -101,7 +112,14 @@ if (condition2)
   return 0;
 ```
 
-Don't leave blanks at the end of lines.
+When breaking long lines with operators, the operator goes at the beginning of
+the new line.
+```
+if ((flags & FOO)
+    || (flags & BAR))
+```
+
+Don't leave whitespace at the end of lines.
 
 ## Function Definitions
 
@@ -112,8 +130,54 @@ line
 static int
 Magic::create_something_wonderful(int random)
 {
-   return magic_happens(random);
+  return magic_happens(random);
 }
+```
+
+## Class Definitions
+
+Base classes can be put in the same line as the class name, if they fit.
+Otherwise, each base class must go on its own line.
+
+So write either
+
+```
+class Foo : public Bar, public Baz
+{
+  // stuff
+};
+```
+
+or
+
+```
+class Foo
+: public Bar,
+  public Baz
+{
+  // stuff
+};
+```
+
+Classes should be structured as follows:
+
+```
+class Foo
+{
+  // enums and structs
+
+public:
+  // Ctors
+  // public functions
+
+protected:
+  // protected functions
+
+private:
+  // private functions
+
+  // public, protected, and private variables at the end.
+};
 ```
 
 ## Braces
@@ -152,6 +216,36 @@ The braces of an empty class body go on a new line below the class declaration
 ```
 class Foo
 {};
+```
+
+## Parenthesis
+
+Use parenthesis only in one of the following cases:
+
+* to improve readability in cases where knowledge of operator precedence is
+  uncommon
+* when expressions get complicated and consist of multiple sub-expressions and
+  it is not possible to split up the expressions
+* when a compiler warning demands it
+
+Common knowledge of operator precedence includes:
+
+* ```==``` and ```!=``` are stronger than ```&&``` and ```||```
+* ```=``` is less strong than common expressions
+
+Examples in which no parenthesis are needed:
+```
+enum
+{
+  Name = expression
+};
+
+int x = expression;
+
+int a = x * y + z;
+
+if (a == b && c == d) ...
+if (a != b || c == d) ...
 ```
 
 ## Spaces
@@ -238,6 +332,7 @@ while (condition);
 ```
 
 ## Endless Loops
+
 ```
 for (;;)
   {
@@ -250,6 +345,10 @@ for (;;)
 Use `enum` types to define integral constants wherever possible. Avoid `static
 const` and `static constexpr`.
 
+## C++ keywords
+
+We use `noexcept` instead of `throw()`.
+
 ## Commenting
 
 In C files and C compatible header files we use `/* ... */`, in C++ code we use
@@ -259,6 +358,15 @@ In C files and C compatible header files we use `/* ... */`, in C++ code we use
 
 If we modify 3rd party code e.g. a library or Linux we apply the coding style
 rules from the 3rd party project.
+
+# GNU Makefiles
+
+Use two spaces for indentation of conditionals:
+```
+ifeq ($(ARCH),mips)
+  SRC_CC_test_$(ARCH)_thread_vcpu_ext += mips_thread_vcpu_ext.cc
+endif
+```
 
 # Doxygen Styles
 
@@ -282,6 +390,7 @@ rules from the 3rd party project.
       the function and the function also returns values through this parameter
     * `\param[out]` is used if the called function stores or returns data
       through this parameter
+* These rules apply to template parameters as well.
 
 ## Return Value Documentation
 
@@ -295,9 +404,9 @@ rules from the 3rd party project.
 /**
  * A brief description of the function
  *
+ * \tparam        T     Description of template parameter.
  * \param         par1  Description of parameter 1.
- * \param[out]    par2  Description of parameter 2. Caller must allocate
- *                      memory.
+ * \param[out]    par2  Description of parameter 2. Caller must allocate memory.
  * \param[in,out] par3  Description of parameter 3.
  *
  * \retval 0           The function returned successfully.
@@ -322,7 +431,7 @@ few inaccuracies that need to be made clear:
 
 ## Indentation
 
-* When indenting parameters, you shall use *tabs* to reach the indent level of
-  the function, and then use *spaces* to align the parameter to the first one.
-  The reason is that if you used a mixture of tabs and spaces, the indenting of
-  the function parameter breaks.
+When indenting parameters, you shall use *tabs* to reach the indent level of
+the function, and then use *spaces* to align the parameter to the first one.
+The reason is that if you used a mixture of tabs and spaces, the indenting of
+the function parameter breaks.
