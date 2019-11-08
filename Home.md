@@ -21,3 +21,4 @@ on [how to contribute](CONTRIBUTING).
   * [Building L4Re](BUILDING)
   * [Running a Linux guest VM](LinuxVM)
   * [Running multiple Linux guest VMs](MultipleVMs)
+  * [Hardware pass-through to the VM](HwPassThrough)
