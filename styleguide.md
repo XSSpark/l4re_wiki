@@ -340,6 +340,20 @@ for (;;)
   }
 ```
 
+## Variable Declarations
+
+Put the `const` keyword after the affected type. Put a space before a pointer
+asterisk `*` and attach it to the declared identifier or a following `const`.
+Examples:
+```
+int i;
+int const c = 42;
+int *p1;
+int *const p3 = &i;        // const pointer to a (non-const) int
+int const *p2;             // pointer to a const int
+int const *const p4 = &c;  // const pointer to a const int
+```
+
 ## C/C++ Integral Constants
 
 Use `enum` types to define integral constants wherever possible. Avoid `static
