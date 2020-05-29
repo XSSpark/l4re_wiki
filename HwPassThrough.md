@@ -168,7 +168,7 @@ local function vm(id, vbus)
   vmm.start_vm({
     id = id,
     mem = 128,
-    rd = "rom/ramdisk-armv8.cpio.gz",
+    rd = "rom/ramdisk-armv8-64.cpio.gz",
     fdt = "rom/virt-arm_virt-64-pl031.dtb",
     kernel = "rom/Image.gz",
     vbus = vbus,
@@ -236,7 +236,7 @@ module uvmm
 module l4re
 module ned
 module virt-arm_virt-64-pl031.dtb
-module ramdisk-armv8.cpio.gz
+module ramdisk-armv8-64.cpio.gz
 module[shell] echo $SRC_BASE_ABS/pkg/uvmm/configs/vmm.lua
 module uvmm-io.ned
 module Image.gz

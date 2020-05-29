@@ -157,7 +157,7 @@ ramdisk:
 If you prefer to use a pre-built Busybox-based ramdisk, you can use one from TU
 Dresden:
 
-    [somedir] $ curl http://os.inf.tu-dresden.de/~adam/dl/ramdisks/ramdisk-armv8.cpio.gz >ramdisk/ramdisk-armv8.cpio.gz
+    [somedir] $ curl http://os.inf.tu-dresden.de/~adam/dl/ramdisks/ramdisk-armv8-64.cpio.gz >ramdisk/ramdisk-armv8-64.cpio.gz
 
 #### Building your own ramdisk
 
@@ -198,7 +198,7 @@ What remains to be done is to create a compressed CPIO archive from the contents
 of the *_install* directory:
 
     [somedir/build-busybox-aarch64] $ cd _install
-    [somedir/build-busybox-aarch64/_install] $ find . | cpio -H newc -o | gzip > ../../ramdisk/ramdisk-armv8.cpio.gz
+    [somedir/build-busybox-aarch64/_install] $ find . | cpio -H newc -o | gzip > ../../ramdisk/ramdisk-armv8-64.cpio.gz
     [somedir/build-busybox-aarch64/_install] $ cd ../..
 
 ### Preparing QEMU
@@ -273,7 +273,7 @@ L4.default_loader:startv({
     ):m("rws");
   }
 }, "rom/uvmm", "--dtb", "rom/virt-arm_virt-64.dtb",
-  "--ramdisk", "rom/ramdisk-armv8.cpio.gz", "--kernel", "rom/Image.gz",
+  "--ramdisk", "rom/ramdisk-armv8-64.cpio.gz", "--kernel", "rom/Image.gz",
   "--cmdline", "console=hvc0 earlyprintk=1 rdinit=/bin/sh");
 ````
 
@@ -299,7 +299,7 @@ module uvmm
 module l4re
 module ned
 module virt-arm_virt-64.dtb
-module ramdisk-armv8.cpio.gz
+module ramdisk-armv8-64.cpio.gz
 module uvmm-basic.ned
 module Image.gz
 ````
@@ -367,7 +367,7 @@ vmm.start_vm({
   id = 1,
   mem = 128,
   mon = false,
-  rd = "rom/ramdisk-armv8.cpio.gz",
+  rd = "rom/ramdisk-armv8-64.cpio.gz",
   fdt = "rom/virt-arm_virt-64.dtb",
   bootargs = "console=hvc0 earlyprintk=1 rdinit=/bin/sh",
   kernel = "rom/Image.gz",
@@ -386,7 +386,7 @@ module uvmm
 module l4re
 module ned
 module virt-arm_virt-64.dtb
-module ramdisk-armv8.cpio.gz
+module ramdisk-armv8-64.cpio.gz
 module[shell] echo $SRC_BASE_ABS/pkg/uvmm/configs/vmm.lua
 module uvmm.ned
 module Image.gz

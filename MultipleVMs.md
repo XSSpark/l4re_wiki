@@ -27,7 +27,7 @@ local function vm(id)
   vmm.start_vm({
     id = id,
     mem = 128,
-    rd = "rom/ramdisk-armv8.cpio.gz",
+    rd = "rom/ramdisk-armv8-64.cpio.gz",
     fdt = "rom/virt-arm_virt-64.dtb",
     kernel = "rom/Image.gz",
     bootargs = "console=hvc0 earlyprintk=1 rdinit=/init",
@@ -55,7 +55,7 @@ module uvmm
 module l4re
 module ned
 module virt-arm_virt-64.dtb
-module ramdisk-armv8.cpio.gz
+module ramdisk-armv8-64.cpio.gz
 module[shell] echo $SRC_BASE_ABS/pkg/uvmm/configs/vmm.lua
 module uvmm-2vm-nocons.ned
 module Image.gz
@@ -98,7 +98,7 @@ module uvmm
 module l4re
 module ned
 module virt-arm_virt-64.dtb
-module ramdisk-armv8.cpio.gz
+module ramdisk-armv8-64.cpio.gz
 module[shell] echo $SRC_BASE_ABS/pkg/uvmm/configs/vmm.lua
 module uvmm-2vm.ned
 module Image.gz
@@ -120,7 +120,7 @@ local function vm(id)
   vmm.start_vm({
     id = id,
     mem = 128,
-    rd = "rom/ramdisk-armv8.cpio.gz",
+    rd = "rom/ramdisk-armv8-64.cpio.gz",
     fdt = "rom/virt-arm_virt-64.dtb",
     kernel = "rom/Image.gz",
     bootargs = "console=hvc0 earlyprintk=1 rdinit=/init",
@@ -224,7 +224,7 @@ module uvmm
 module l4re
 module ned
 module virt-arm_virt-64.dtb
-module ramdisk-armv8.cpio.gz
+module ramdisk-armv8-64.cpio.gz
 module[shell] echo $SRC_BASE_ABS/pkg/uvmm/configs/vmm.lua
 module uvmm-2vm-net.ned
 module Image.gz
@@ -247,7 +247,7 @@ local function vm(id, net, args)
   vmm.start_vm({
     id = id,
     mem = 128,
-    rd = "rom/ramdisk-armv8.cpio.gz",
+    rd = "rom/ramdisk-armv8-64.cpio.gz",
     fdt = "rom/virt-arm_virt-64.dtb",
     kernel = "rom/Image.gz",
     net = net,
