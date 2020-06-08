@@ -363,6 +363,26 @@ const` and `static constexpr`.
 
 We use `noexcept` instead of `throw()`.
 
+## Using RAII in C++
+
+Resources should be managed according to the
+[RAII paradigm](https://en.wikipedia.org/wiki/Resource_acquisition_is_initialization).
+Avoid explicit malloc/free/new/delete in C++ code.
+
+## Using exceptions
+
+L4Re applications may use exceptions only to detect unexpected error conditions.
+These are errors that have one of two consequences:
+
+* the application prints an error and exits
+* in a server loop, processing of the current client request is aborted and
+  an error is returned to the client.
+
+Install the special L4 terminate handler from `#include <terminate_handler-l4>`
+to ensure that exceptions print a meaningful message. You can also add a
+catch-all try-catch in the main function. As a rule, this should be the only
+try-catch you should need in your application.
+
 ## Commenting
 
 In C files and C compatible header files we use `/* ... */`, in C++ code we use
