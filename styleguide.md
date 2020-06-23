@@ -363,13 +363,15 @@ const` and `static constexpr`.
 
 We use `noexcept` instead of `throw()`.
 
-## Using RAII in C++
+## Resource Management and Memory Allocation
 
 Resources should be managed according to the
 [RAII paradigm](https://en.wikipedia.org/wiki/Resource_acquisition_is_initialization).
 Avoid explicit malloc/free/new/delete in C++ code.
 
-## Using exceptions
+`malloc`/`free` must not be used in C++.
+
+## Using Exceptions
 
 L4Re applications may use exceptions only to detect unexpected error conditions.
 These are errors that have one of two consequences:
@@ -382,6 +384,51 @@ Install the special L4 terminate handler from `#include <terminate_handler-l4>`
 to ensure that exceptions print a meaningful message. You can also add a
 catch-all try-catch in the main function. As a rule, this should be the only
 try-catch you should need in your application.
+
+## Defensive Programming
+
+### Type Casting
+
+Code must be written in a way that minimizes the need for casts. In particular,
+consider the value range and signedness for POD variables and be mindful of
+narrowing casts.
+
+When having to cast, always use C++-style casts. The following rules apply:
+
+* when using `dynamic_cast` the result must be checked for `nullptr`
+* `reinterpret_cast` may only be used in dedicated allocator functions
+  that provide typed memory
+
+### Error Checking of Input
+
+Do not trust the content of received IPC. Use the RPC framework to ensure
+correct handling of the IPC buffer and check the value range of parameters.
+
+When a function returns an error, the caller must always check for the error
+condition. You may use `L4Re::chksys()` to convert the error to an exception.
+
+### Assertions
+
+**Do** use assertions to
+
+* express pre- and postconditions of functions,
+* check for programming errors that are not expected to ever occur.
+
+**Don't** use assertions to
+
+* check for errors that may be expected in production
+* stop the program on an unexpected condition.
+
+Assertion must not have side effects. The program must work safely when they
+are disabled. In particular, the core components must be able to handle
+unexpected conditions in a way that the system remains in a safe state.
+
+### goto, setjmp, longjmp
+
+Do not use `goto`, `setjmp` or `longjmp`.
+
+The only exception is in C code: `goto` may be used to clean resources during
+error handling.
 
 ## Commenting
 
