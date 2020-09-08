@@ -239,7 +239,7 @@ module virt-arm_virt-64-pl031.dtb
 module ramdisk-armv8-64.cpio.gz
 module[shell] echo $SRC_BASE_ABS/pkg/uvmm/configs/vmm.lua
 module uvmm-io.ned
-module Image.gz
+module[uncompress] Image.gz
 module cons
 module io
 module io.cfg

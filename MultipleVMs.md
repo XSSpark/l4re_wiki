@@ -58,7 +58,7 @@ module virt-arm_virt-64.dtb
 module ramdisk-armv8-64.cpio.gz
 module[shell] echo $SRC_BASE_ABS/pkg/uvmm/configs/vmm.lua
 module uvmm-2vm-nocons.ned
-module Image.gz
+module[uncompress] Image.gz
 ````
 
 After starting this scenario, you'll notice that indeed now there are two VMs
@@ -101,7 +101,7 @@ module virt-arm_virt-64.dtb
 module ramdisk-armv8-64.cpio.gz
 module[shell] echo $SRC_BASE_ABS/pkg/uvmm/configs/vmm.lua
 module uvmm-2vm.ned
-module Image.gz
+module[uncompress] Image.gz
 module cons
 ````
 
@@ -227,7 +227,7 @@ module virt-arm_virt-64.dtb
 module ramdisk-armv8-64.cpio.gz
 module[shell] echo $SRC_BASE_ABS/pkg/uvmm/configs/vmm.lua
 module uvmm-2vm-net.ned
-module Image.gz
+module[uncompress] Image.gz
 module cons
 module l4vio_net_p2p
 ````

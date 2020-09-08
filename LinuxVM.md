@@ -301,7 +301,7 @@ module ned
 module virt-arm_virt-64.dtb
 module ramdisk-armv8-64.cpio.gz
 module uvmm-basic.ned
-module Image.gz
+module[uncompress] Image.gz
 ````
 
 ### Creating Makeconf.boot
@@ -389,7 +389,7 @@ module virt-arm_virt-64.dtb
 module ramdisk-armv8-64.cpio.gz
 module[shell] echo $SRC_BASE_ABS/pkg/uvmm/configs/vmm.lua
 module uvmm.ned
-module Image.gz
+module[uncompress] Image.gz
 ````
 
 You can now run this scenario:
