@@ -18,6 +18,14 @@ their dependencies:
     [somedir] $ dnf install perl-Archive-Extract-zip-Archive-Zip perl-PAR-Packer perl-Git-Repository-Plugin-AUTOLOAD perl-CPAN perl-Test perl-Text-Balanced gcc gcc-c++ glibc-devel.i686 ncurses-devel xorriso flex bison pkgconf-pkg-config gawk
     [somedir] $ cpan install XML::Mini::Document
 
+On Arch Linux, the following packages need to be installed:
+
+    [somedir] $ pacman -S --needed base-devel dtc lib32-gcc-libs qemu qemu-arch-extra mtools
+
+Additionally, these packages need to be installed from the AUR by a method of your choice:
+
+    [somedir] $ yay -S perl-par-packer perl-git-repository perl-xml-mini perl-uri
+
 ## Getting and installing ham
 
 L4Re is composed of several loosely coupled Git repositories. While it is
