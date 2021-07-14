@@ -10,12 +10,12 @@ Depending on your host system, you might need to install some prerequisities.
 On Debian 9.4, make sure you have the required packages installed together with
 their dependencies by running the following command with sufficient privileges:
 
-    [somedir] $ apt-get install git make liburi-perl libpar-packer-perl libgit-repository-perl libxml-mini-perl gcc g++ libc6-dev-i386 g++-multilib libncurses5-dev qemu xorriso mtools flex bison pkg-config gawk liburi-perl
+    [somedir] $ apt-get install git make liburi-perl libpar-packer-perl libgit-repository-perl libxml-mini-perl gcc g++ libc6-dev-i386 g++-multilib libncurses5-dev qemu xorriso mtools flex bison pkg-config gawk liburi-perl device-tree-compiler
 
 On top of a fresh Fedora 27 install, you will need the following packages and
 their dependencies:
 
-    [somedir] $ dnf install perl-URI perl-PAR-Packer perl-Git-Repository-Plugin-AUTOLOAD perl-CPAN perl-Test perl-Text-Balanced gcc gcc-c++ glibc-devel.i686 ncurses-devel xorriso flex bison pkgconf-pkg-config gawk
+    [somedir] $ dnf install perl-URI perl-PAR-Packer perl-Git-Repository-Plugin-AUTOLOAD perl-CPAN perl-Test perl-Text-Balanced gcc gcc-c++ glibc-devel.i686 ncurses-devel xorriso flex bison pkgconf-pkg-config gawk dtc
     [somedir] $ cpan install XML::Mini::Document
 
 On Arch Linux, the following packages need to be installed:
