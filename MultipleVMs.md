@@ -31,7 +31,8 @@ local function vm(id)
     fdt = "rom/virt-arm_virt-64.dtb",
     kernel = "rom/Image.gz",
     bootargs = "console=hvc0 earlyprintk=1 rdinit=/init",
-    log = L4.Env.log
+    log = L4.Env.log,
+    ext_args = { "-i" }
   });
 end
 
@@ -124,6 +125,7 @@ local function vm(id)
     fdt = "rom/virt-arm_virt-64.dtb",
     kernel = "rom/Image.gz",
     bootargs = "console=hvc0 earlyprintk=1 rdinit=/init",
+    ext_args = { "-i" }
   });
 end
 
@@ -252,6 +254,7 @@ local function vm(id, net, args)
     kernel = "rom/Image.gz",
     net = net,
     bootargs = "console=hvc0 earlyprintk=1 rdinit=/init " .. (args or ""),
+    ext_args = { "-i" }
   });
 end
 

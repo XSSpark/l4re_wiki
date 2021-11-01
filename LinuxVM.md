@@ -272,7 +272,9 @@ L4.default_loader:startv({
       21                                   -- alignment
     ):m("rws");
   }
-}, "rom/uvmm", "--dtb", "rom/virt-arm_virt-64.dtb",
+}, "rom/uvmm",
+  "-i",  -- place guest RAM using the host-physical addresses of the backing memory
+  "--dtb", "rom/virt-arm_virt-64.dtb",
   "--ramdisk", "rom/ramdisk-armv8-64.cpio.gz", "--kernel", "rom/Image.gz",
   "--cmdline", "console=hvc0 earlyprintk=1 rdinit=/bin/sh");
 ````
@@ -371,7 +373,8 @@ vmm.start_vm({
   fdt = "rom/virt-arm_virt-64.dtb",
   bootargs = "console=hvc0 earlyprintk=1 rdinit=/bin/sh",
   kernel = "rom/Image.gz",
-  log = L4.Env.log
+  log = L4.Env.log,
+  ext_args = { "-i" }
 });
 ````
 

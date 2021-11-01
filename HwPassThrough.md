@@ -173,6 +173,7 @@ local function vm(id, vbus)
     kernel = "rom/Image.gz",
     vbus = vbus,
     bootargs = "console=hvc0 earlyprintk=1 rdinit=/init",
+    ext_args = { "-i" }
   });
 end
 
