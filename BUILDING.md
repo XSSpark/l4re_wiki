@@ -241,3 +241,19 @@ before cross-compilation, you may get failures that look like:
     arm-linux-gnueabihf-gcc: error: unrecognized command line option ‘-m32’
     Makefile:372: recipe for target 'Makeconf.bid.local-internal-names' failed
     make[5]: *** [Makeconf.bid.local-internal-names] Error 1
+
+### L4Re stops during boot after Sigma0 output
+
+If you are on the aarch64 architecture and observe the boot process to stop
+some lines after
+
+    SIGMA0: Hello!
+
+but before
+
+    MOE: Hello world
+
+Then it is likely that the Fiasco kernel is configured to support
+virtualization but the L4Re user-land is not. Please ensure the L4Re
+configuration features "CONFIG_KERNEL_CPU_VIRT=y" (Kernel supports
+virtualization) and rebuild the L4Re.

@@ -103,6 +103,7 @@ Make sure to select:
   * Target Architecture: ARM64 Architecture (AArch64)
   * CPU Variant: ARMv8-A Type CPU
   * Platform Selection: QEMU ARM Virtual Platform
+  * Kernel supports virtualization
 
 Once configured, build L4Re like this:
 
