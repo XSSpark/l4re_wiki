@@ -58,11 +58,11 @@ a build directory:
     [somedir] cd l4
     [somedir/l4] $ make B=../build-i386
     [somedir/l4] $ cd ../build-i386
-    [somedir/build-i386] $ make config    # Merely exit and save the default configuration
+    [somedir/build-i386] $ make config    # Make sure to select the X86-32 target architecture and exit
 
-Note that by choosing the default configuration, you are going to build L4Re for
-x86. Also note that the build directory can be arbitrary. *build-i386* is
-used as an example here.
+Note that you need to choose the X86-32 target architecture before saving the
+configuration in order to build L4Re for x86. Also note that the build directory
+can be arbitrary. *build-i386* is used as an example here.
 
 The build directory is now ready and you can build the L4Re binaries:
 
@@ -85,7 +85,7 @@ Create and configure the Fiasco build directory:
     [somedir/build-i386] cd ../fiasco
     [somedir/fiasco] $ make B=../build-fiasco-i386
     [somedir/fiasco] $ cd ../build-fiasco-i386
-    [somedir/build-fiasco-i386] $ make config    # Merely exit and save the default configuration
+    [somedir/build-fiasco-i386] $ make config    # Make sure to select Intel IA-32 processor family as Architecture in Target configuration and exit
 
 And finally, build Fiasco itself:
 
