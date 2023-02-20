@@ -344,6 +344,14 @@ for (;;)
 
 Put the `const` keyword after the affected type. Put a space before a pointer
 asterisk `*` and attach it to the declared identifier or a following `const`.
+
+Motivation: Everything left of `const` is constant:
+```
+FOO const *const
+```
+* The left-most `const` makes `FOO` a constant object.
+* The right-most `const` makes the pointer constant.
+
 Examples:
 ```
 int i;
