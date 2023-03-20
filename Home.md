@@ -22,3 +22,4 @@ on [how to contribute](CONTRIBUTING).
   * [Running a Linux guest VM](LinuxVM)
   * [Running multiple Linux guest VMs](MultipleVMs)
   * [Hardware pass-through to the VM](HwPassThrough)
+  * [Using the NVMe server with a Linux guest VM](NVMeWithLinux.md)
