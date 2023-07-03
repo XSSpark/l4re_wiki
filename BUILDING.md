@@ -171,13 +171,13 @@ Alternatively, you can define the *CROSS_COMPILE* variable on the command line:
 
 In both cases, don't forget to configure the system for the ARM architecture, the ARMv7A CPU variant and the ARM Versatile Express A15 platform.
 
-Cross-compiling Fiasco is analogous to cross-compiling L4Re:
+Cross-compiling Fiasco is analogous to cross-compiling L4Re. Make sure to unselect the Virtualization option in this case:
 
     [somedir/build-arm] $ cd ../fiasco
     [somedir/fiasco] $ make B=../build-fiasco-arm
     [somedir/fiasco] $ cd ../build-fiasco-arm
     [somedir/build-fiasco-arm] $ echo "CROSS_COMPILE:=arm-linux-gnueabihf-" > Makeconf.local
-    [somedir/build-fiasco-arm] $ make config    # Select ARM processor family as Architecture, ARM RealView Platform as Platform, Versatile Express as Realview Platform and ARM Cortex-A15 CPU as CPU
+    [somedir/build-fiasco-arm] $ make config    # Unselect Virtualization, select ARM processor family as Architecture, ARM RealView Platform as Platform, Versatile Express as Realview Platform and ARM Cortex-A15 CPU as CPU
     [somedir/build-fiasco-arm] $ make
 
 When all is built, run the *hello* scenario in QEMU (assuming *qemu-system-arm*

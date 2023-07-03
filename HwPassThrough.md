@@ -143,7 +143,7 @@ from the QEMU aarch64 virt machine's device tree. That device tree is
 dynamically constructed by QEMU, but fortunately you can ask QEMU to dump the
 device tree binary blob into a file and then decompile it into its source form:
 
-    [somedir] $ qemu-system-aarch64 -nographic -machine virt,dumpdtb=conf/arm_virt-64-full.dtb
+    [somedir] $ qemu-system-aarch64 -nographic -machine virt,virtualization=true,dumpdtb=conf/arm_virt-64-full.dtb
     [somedir] $ dtc -I dtb -O dts conf/arm_virt-64-full.dtb
 
 For other machines, you can use the respective device tree from the Linux
